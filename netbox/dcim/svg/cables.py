@@ -176,7 +176,19 @@ class CableTraceSVG:
                 labels.append(f'{instance.xconnect_id}')
         elif instance._meta.model_name == 'providernetwork':
             labels.append(instance.provider)
-
+        elif instance._meta.model_name == 'interface':
+            vlan_label = ""
+            match instance.mode:
+                case 'tagged':
+                    if instance.tagged_vlans.exists():
+                        for vlan in instance.tagged_vlans.all():
+                           vlan_label += f'{vlan.vid}, '
+                        vlan_label = vlan_label[:-2]
+                case 'untagged':
+                    vlan_label += instance.untagged_vlan.name
+                case _:
+                    vlan_label +=  'Currently no VLANs assigned'
+            labels.append(vlan_label)
         return labels
 
     @classmethod
