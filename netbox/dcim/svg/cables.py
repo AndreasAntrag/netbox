@@ -185,9 +185,10 @@ class CableTraceSVG:
                            vlan_label += f'{vlan.vid}, '
                         vlan_label = vlan_label[:-2]
                 case 'untagged':
-                    vlan_label += instance.untagged_vlan.name
+                    if instance.untagged_vlan is not None:
+                        vlan_label += instance.untagged_vlan.name
                 case _:
-                    vlan_label +=  'Currently no VLANs assigned'
+                    vlan_label +=  'Currently no VLANs assigned.'
             labels.append(vlan_label)
         return labels
 
