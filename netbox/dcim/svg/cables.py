@@ -180,7 +180,7 @@ class CableTraceSVG:
             vlan_label = ""
             match instance.mode:
                 case 'tagged':
-                    if instance.tagged_vlans.exists():
+                    if instance.tagged_vlans is not None:
                         for vlan in instance.tagged_vlans.all():
                            vlan_label += f'{vlan.vid}, '
                         vlan_label = vlan_label[:-2]
